@@ -150,6 +150,7 @@
     <ClCompile Include="RayTracer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Memory Management\Heap.h" />
     <ClInclude Include="Maths\Vec3.h" />
     <ClInclude Include="Memory Management\HeapFactory.h" />
