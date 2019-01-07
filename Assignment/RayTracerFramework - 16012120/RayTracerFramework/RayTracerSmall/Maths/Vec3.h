@@ -17,14 +17,11 @@ namespace  maths
 		
 		Vec3& normalize()
 		{
-			T nor2 = length2();
-			if (nor2 > 0)
+			if (length2() > 0)
 			{
-				T invNor = 1 / sqrt(nor2);
-				x *= invNor, y *= invNor, z *= invNor;
+				T invNor = 1 / sqrt((T)length2());
+				return *this *= invNor;
 			}
-
-			return *this;
 		}
 
 		T dot(const Vec3<T> &v) const														{ return x * v.x + y * v.y + z * v.z; }

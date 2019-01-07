@@ -40,7 +40,7 @@ void Renderer::Render(const std::vector<Sphere>& spheres, int iteration)
 			float yy = (1 - 2 * ((y + 0.5) * invHeight)) * angle;
 			Vec3f raydir(xx, yy, -1);
 			raydir.normalize();
-			*pixel = RayTracer::Trace(Vec3f(0), raydir, spheres, 0);
+			*pixel = RayTracer::GetInstance()->Trace(Vec3f(0), raydir, spheres, 0);
 		}
 	}
 	// Save result to a PPM image (keep these flags if you compile under Windows)

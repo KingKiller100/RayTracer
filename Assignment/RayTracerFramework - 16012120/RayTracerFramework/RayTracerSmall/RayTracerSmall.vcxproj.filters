@@ -65,13 +65,13 @@
     <ClInclude Include="FrameList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="animations.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Shapes\Sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framesCollection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

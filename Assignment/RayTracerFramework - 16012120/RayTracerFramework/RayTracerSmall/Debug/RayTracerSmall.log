@@ -1,4 +1,9 @@
-﻿  Renderer.cpp
+﻿  Vec3.cpp
+  RayTracer.cpp
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\raytracer.cpp(68): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\raytracer.cpp(74): warning C4305: 'argument': truncation from 'double' to 'const float'
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\raytracer.cpp(84): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Renderer.cpp
 c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(35): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(40): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
@@ -27,4 +32,14 @@ c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\r
 c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(130): warning C4305: 'argument': truncation from 'double' to 'float'
 c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(131): warning C4305: 'argument': truncation from 'double' to 'float'
 c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(132): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Sphere.cpp
+  main.cpp
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(37): warning C4005: 'INFINITY': macro redefinition
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\corecrt_math.h(90): note: see previous definition of 'INFINITY'
+  Generating Code...
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\maths\vec3.h(25): warning C4715: 'maths::Vec3<float>::normalize': not all control paths return a value
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\maths\vec3.h(39): warning C4172: returning address of local variable or temporary
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\maths\vec3.h(25): warning C4715: 'maths::Vec3<float>::normalize': not all control paths return a value
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\maths\vec3.h(38): warning C4172: returning address of local variable or temporary
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\maths\vec3.h(39): warning C4172: returning address of local variable or temporary
   RayTracerSmall.vcxproj -> C:\Users\d012120g\Documents\RayTracer\Assignment\RayTracerFramework - 16012120\RayTracerFramework\Debug\RayTracerSmall.exe

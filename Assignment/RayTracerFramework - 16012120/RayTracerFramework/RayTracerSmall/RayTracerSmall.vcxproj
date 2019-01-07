@@ -152,7 +152,7 @@
     <ClCompile Include="RayTracer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="animations.h" />
+    <ClInclude Include="framesCollection.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="FrameList.h" />
     <ClInclude Include="Memory Management\Heap.h" />

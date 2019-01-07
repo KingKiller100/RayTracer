@@ -4,8 +4,22 @@
 // This variable controls the maximum recursion depth
 #define MAX_RAY_DEPTH 5
 
+RayTracer *RayTracer::instance = nullptr;
+Heap *RayTracer::_heap = nullptr;
+Sphere *RayTracer::sphere = NULL;
+
+RayTracer* RayTracer::GetInstance()
+{
+	if (!instance)
+		instance = new RayTracer;
+
+	return instance;
+}
+
 RayTracer::RayTracer()
-{}
+{
+	sphere = new Sphere();
+}
 
 
 RayTracer::~RayTracer() = default;
@@ -27,17 +41,18 @@ float RayTracer::Mix(const float &a, const float &b, const float &mix)
 //[/comment]
 Vec3f RayTracer::Trace(const Vec3f& rayorig, const Vec3f& raydir, const std::vector<Sphere>& spheres, const int& depth)
 {
+	int sphereListSize = spheres.size();
+
 	//if (raydir.length() != 1) std::cerr << "Error " << raydir << std::endl;
 	float tnear = INFINITY;
-	const Sphere* sphere = NULL;
 	// find intersection of this ray with the sphere in the scene
-	for (unsigned i = 0; i < spheres.size(); ++i) {
+	for (unsigned i = 0; i < sphereListSize; ++i) {
 		float t0 = INFINITY, t1 = INFINITY;
 		if (spheres[i].intersect(rayorig, raydir, t0, t1)) {
 			if (t0 < 0) t0 = t1;
 			if (t0 < tnear) {
 				tnear = t0;
-				sphere = &spheres[i];
+				sphere = &(Sphere)spheres[i];
 			}
 		}
 	}
@@ -66,7 +81,8 @@ Vec3f RayTracer::Trace(const Vec3f& rayorig, const Vec3f& raydir, const std::vec
 		Vec3f reflection = Trace(phit + nhit * bias, refldir, spheres, depth + 1);
 		Vec3f refraction = 0;
 		// if the sphere is also transparent compute refraction ray (transmission)
-		if (sphere->transparency) {
+		if (sphere->transparency) 
+		{
 			float ior = 1.1, eta = (inside) ? ior : 1 / ior; // are we inside or outside the surface?
 			float cosi = -nhit.dot(raydir);
 			float k = 1 - eta * eta * (1 - cosi * cosi);
@@ -81,13 +97,13 @@ Vec3f RayTracer::Trace(const Vec3f& rayorig, const Vec3f& raydir, const std::vec
 	}
 	else {
 		// it's a diffuse object, no need to raytrace any further
-		for (unsigned i = 0; i < spheres.size(); ++i) {
+		for (unsigned i = 0; i < sphereListSize; ++i) {
 			if (spheres[i].emissionColor.x > 0) {
 				// this is a light
 				Vec3f transmission = 1;
 				Vec3f lightDirection = spheres[i].center - phit;
 				lightDirection.normalize();
-				for (unsigned j = 0; j < spheres.size(); ++j) {
+				for (unsigned j = 0; j < sphereListSize; ++j) {
 					if (i != j) {
 						float t0, t1;
 						if (spheres[j].intersect(phit + nhit * bias, lightDirection, t0, t1)) {
