@@ -1,6 +1,6 @@
 #include "Sphere.h"
 
-Heap *Sphere::heap = nullptr;
+Heap *Sphere::_heap= nullptr;
 
 Sphere::Sphere(const Vec3f& c, const float& r, const Vec3f& sc, const float& refl, const float& transp, const Vec3f& ec) :
 	center(c), radius(r), radius2(r * r), surfaceColor(sc), emissionColor(ec),

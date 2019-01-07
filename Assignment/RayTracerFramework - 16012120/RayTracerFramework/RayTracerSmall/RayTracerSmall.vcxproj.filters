@@ -33,6 +33,9 @@
     <ClCompile Include="RayTracer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Memory Management\MemoryStructures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Memory Management\Heap.h">
@@ -56,7 +59,13 @@
     <ClInclude Include="RayTracer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h">
+    <ClInclude Include="Frame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="animations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

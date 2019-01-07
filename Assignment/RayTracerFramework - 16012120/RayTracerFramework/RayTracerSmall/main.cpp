@@ -20,13 +20,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // [/ignore]
+#include "Memory Management/MemoryStructures.h"
 #include <cstdlib>
 #include <cstdio>
 #include <cmath>
 #include <fstream>
 #include <vector>
 #include <iostream>
-#include "Memory Management/MemoryStructures.h"
 #include "Maths/Vec3.h"
 #include "GameObject/Sphere.h"
 
@@ -73,7 +73,7 @@ Vec3f trace(
 {
 	//if (raydir.length() != 1) std::cerr << "Error " << raydir << std::endl;
 	float tnear = INFINITY;
-	const Sphere* sphere = NULL;
+	const Sphere* sphere = new Sphere();
 	// find intersection of this ray with the sphere in the scene
 	for (unsigned i = 0; i < spheres.size(); ++i) {
 		float t0 = INFINITY, t1 = INFINITY;

@@ -147,10 +147,13 @@
     <ClCompile Include="Memory Management\Heap.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Memory Management\HeapFactory.cpp" />
+    <ClCompile Include="Memory Management\MemoryStructures.cpp" />
     <ClCompile Include="RayTracer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h" />
+    <ClInclude Include="animations.h" />
+    <ClInclude Include="Frame.h" />
+    <ClInclude Include="FrameList.h" />
     <ClInclude Include="Memory Management\Heap.h" />
     <ClInclude Include="Maths\Vec3.h" />
     <ClInclude Include="Memory Management\HeapFactory.h" />

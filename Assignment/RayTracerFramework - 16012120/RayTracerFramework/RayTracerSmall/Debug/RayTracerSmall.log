@@ -1,40 +1,4 @@
-﻿  Sphere.cpp
-  Vec3.cpp
+﻿  Heap.cpp
   HeapFactory.cpp
-  main.cpp
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(42): warning C4005: 'INFINITY': macro redefinition
-  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\corecrt_math.h(90): note: see previous definition of 'INFINITY'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(99): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(105): warning C4305: 'argument': truncation from 'double' to 'const float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(114): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(170): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(174): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(175): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(203): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(204): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(205): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(206): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(222): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(223): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(224): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(225): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(230): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(231): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(232): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(233): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(237): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(238): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(239): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(240): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(244): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(245): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(246): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(247): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(264): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(265): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(266): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(267): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(268): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   Generating Code...
-c:\users\d012120g\documents\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\maths\vec3.h(40): warning C4172: returning address of local variable or temporary
-  RayTracerSmall.vcxproj -> C:\Users\d012120g\Documents\Assignment\RayTracerFramework - 16012120\RayTracerFramework\Debug\RayTracerSmall.exe
+  RayTracerSmall.vcxproj -> C:\Users\d012120g\Documents\RayTracer\Assignment\RayTracerFramework - 16012120\RayTracerFramework\Debug\RayTracerSmall.exe
