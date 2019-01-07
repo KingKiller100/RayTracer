@@ -9,7 +9,7 @@ class MemoryOverride
 public:
 	void * operator new(size_t size)
 	{
-		if (!X::_heap)
+		if (!X::_heap) // For each class created, make a static heap object "_heap"
 			X::_heap = HeapFactory::CreateHeap(typeid(X).name());
 
 		return ::operator new(size, X::_heap);

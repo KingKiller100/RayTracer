@@ -142,7 +142,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GameObject\Sphere.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Shapes\Sphere.cpp" />
     <ClCompile Include="Maths\Vec3.cpp" />
     <ClCompile Include="Memory Management\Heap.cpp" />
     <ClCompile Include="main.cpp" />
@@ -159,7 +160,8 @@
     <ClInclude Include="Memory Management\HeapFactory.h" />
     <ClInclude Include="Memory Management\MemoryOverride.h" />
     <ClInclude Include="Memory Management\MemoryStructures.h" />
-    <ClInclude Include="GameObject\Sphere.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Shapes\Sphere.h" />
     <ClInclude Include="RayTracer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

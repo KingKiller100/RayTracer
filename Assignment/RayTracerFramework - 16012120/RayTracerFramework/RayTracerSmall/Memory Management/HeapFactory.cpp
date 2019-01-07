@@ -8,9 +8,9 @@ HeapFactory::HeapFactory() {}
 
 HeapFactory::~HeapFactory()
 {
-
 	if (_defaultHeap)
 		free(_defaultHeap);
+
 	for (Heap* heap : heapContainer)
 		free(heap);
 }
