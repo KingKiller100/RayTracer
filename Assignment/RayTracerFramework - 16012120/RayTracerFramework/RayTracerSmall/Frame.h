@@ -1,14 +1,15 @@
 #pragma once
 #include "Maths/Vec3.h"
 
-typedef maths::Vec3<double> Vec3d;
-
 struct Frame
 {
-	char objectID;
+	std::string objectID;
 	int keyFrame;
-	Vec3d pos;
-	Vec3d scale;
-	Vec3d brushColour;
-	Vec3d colour;
+	float scale;
+	Vec3f pos;
+	Vec3f brushColour;
+	Vec3f colour;
+
+	Frame() : objectID(" "), keyFrame(-1), scale(1.f), pos(0), brushColour(255), colour(255)
+	{ }
 };

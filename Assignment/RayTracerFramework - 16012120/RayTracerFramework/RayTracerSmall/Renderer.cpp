@@ -3,10 +3,13 @@
 #include <sstream>
 #include <algorithm>
 #include <fstream>
+#include <chrono>
 
 #define M_PI 3.141592653589793
 
 Heap* Renderer::_heap = nullptr;
+
+typedef std::chrono::milliseconds Milliseconds;
 
 Renderer::Renderer(const unsigned &w, const unsigned &h): width(w), height(h), image(nullptr)
 {}
@@ -25,7 +28,7 @@ Renderer::~Renderer()
 //[/comment]
 void Renderer::Render(const std::vector<Sphere>& spheres, const int &iteration)
 {
-	image = new Vec3f[width * height];
+ 	image = new Vec3f[width * height];
 	Vec3f *pixel = image;
 	float invWidth = 1 / float(width), invHeight = 1 / float(height);
 	float fov = 30, aspectratio = width / float(height);
@@ -117,12 +120,46 @@ void Renderer::SimpleShrinking()
 
 void Renderer::SmoothScaling()
 {
+	auto startRender = std::chrono::system_clock::now();
+
 	std::vector<Sphere> spheres;
-	std::string input;
 
-	// std::cin >> input;
+	int numOfFrames = 101;
 
-	animations.ReadJSON("sphereData\\spheres1.json");
+	animations.ReadJSON("Data\\spheresData.json", numOfFrames);
+
+	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
+	for (float r = 0; r <= numOfFrames; r++)
+	{
+		auto start = std::chrono::system_clock::now();
+
+		Frame frame1 = *animations.framesCollection[0]->framesList[r];
+		Frame frame2 = *animations.framesCollection[1]->framesList[r];
+		Frame frame3 = *animations.framesCollection[2]->framesList[r];
+		Frame frame4 = *animations.framesCollection[3]->framesList[r];
+
+		spheres.push_back(Sphere(frame1.pos, frame1.scale, frame1.brushColour, 1, 0.0));
+		spheres.push_back(Sphere(frame2.pos, frame2.scale, frame2.brushColour, 1, 0.0));
+		spheres.push_back(Sphere(frame3.pos, frame3.scale, frame3.brushColour, 1, 0.0));
+		spheres.push_back(Sphere(frame4.pos, frame4.scale, frame4.brushColour, 1, 0.0));
+
+		Render(spheres, r);
+		std::cout << "Rendered and saved spheres" << r << ".ppm" << std::endl;
+
+		// Dont forget to clear the Vector holding the spheres.
+		spheres.clear();
+
+		auto end = std::chrono::duration_cast <Milliseconds>(std::chrono::system_clock::now() - start);
+		
+		std::cout << "Time: " << end.count() << "ms" << std::endl;
+	}
+
+	auto endRender = std::chrono::duration_cast <Milliseconds>(std::chrono::system_clock::now() - startRender);
+}
+
+void Renderer::SmoothScalingUO()
+{
+	std::vector<Sphere> spheres;
 
 	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
 	for (float r = 0; r <= 100; r++)
@@ -133,10 +170,8 @@ void Renderer::SmoothScaling()
 		spheres.push_back(Sphere(Vec3f(5.0, 0, -25), 3, Vec3f(0.65, 0.77, 0.97), 1, 0.0));
 		Render(spheres, r);
 		std::cout << "Rendered and saved spheres" << r << ".ppm" << std::endl;
-		
+
 		// Dont forget to clear the Vector holding the spheres.
 		spheres.clear();
 	}
 }
-
-

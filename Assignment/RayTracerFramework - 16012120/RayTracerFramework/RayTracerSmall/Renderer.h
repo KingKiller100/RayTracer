@@ -16,12 +16,13 @@ public:
 	void BasicRender();
 	void SimpleShrinking();
 	void SmoothScaling();
+	void SmoothScalingUO();
 
 private:
 	unsigned width;
 	unsigned height;
 	Vec3f *image;
 
-	Animation animations;
+	FramesCollection animations;
 };
 

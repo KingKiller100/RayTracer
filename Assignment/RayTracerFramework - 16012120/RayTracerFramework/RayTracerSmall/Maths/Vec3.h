@@ -45,3 +45,5 @@ namespace  maths
 		}
 	};
 }
+
+typedef maths::Vec3<float> Vec3f;
