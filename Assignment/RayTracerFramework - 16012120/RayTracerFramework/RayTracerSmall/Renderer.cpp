@@ -8,11 +8,8 @@
 
 Heap* Renderer::_heap = nullptr;
 
-Renderer::Renderer(const unsigned &w, const unsigned h)
-{
-	width = w;
-	height = h;
-}
+Renderer::Renderer(const unsigned &w, const unsigned &h): width(w), height(h), image(nullptr)
+{}
 
 
 Renderer::~Renderer()
@@ -26,7 +23,7 @@ Renderer::~Renderer()
 // trace it and return a color. If the ray hits a sphere, we return the color of the
 // sphere at the intersection point, else we return the background color.
 //[/comment]
-void Renderer::Render(const std::vector<Sphere>& spheres, int iteration)
+void Renderer::Render(const std::vector<Sphere>& spheres, const int &iteration)
 {
 	image = new Vec3f[width * height];
 	Vec3f *pixel = image;
@@ -121,8 +118,13 @@ void Renderer::SimpleShrinking()
 void Renderer::SmoothScaling()
 {
 	std::vector<Sphere> spheres;
-	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
+	std::string input;
 
+	// std::cin >> input;
+
+	animations.ReadJSON("sphereData\\spheres1.json");
+
+	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
 	for (float r = 0; r <= 100; r++)
 	{
 		spheres.push_back(Sphere(Vec3f(0.0, -10004, -20), 10000, Vec3f(0.20, 0.20, 0.20), 0, 0.0));

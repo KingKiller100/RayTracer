@@ -16,7 +16,7 @@ public:
 		return framesList.size();
 	}
 
-	void Add(Frame frame)
+	void Add(Frame* frame)
 	{
 		framesList.emplace_back(frame);
 	}

@@ -22,9 +22,6 @@
 // [/ignore]
 #include "Memory Management/MemoryStructures.h"
 #include <cstdlib>
-#include <cstdio>
-#include "Maths/Vec3.h"
-#include "Shapes/Sphere.h"
 #include "Renderer.h"
 
 // Windows only

@@ -3,10 +3,9 @@
 
 typedef maths::Vec3<double> Vec3d;
 
-class Frame
+struct Frame
 {
-public:
-	char16_t objectID;
+	char objectID;
 	int keyFrame;
 	Vec3d pos;
 	Vec3d scale;
