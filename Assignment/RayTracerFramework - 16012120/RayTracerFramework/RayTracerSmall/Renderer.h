@@ -1,8 +1,7 @@
 #pragma once
 #include "RayTracer.h"
-#include "Animation/FramesCollection.h"
 
-class Renderer : public MemoryOverride<Renderer>
+class Renderer final : public MemoryOverride<Renderer>
 {
 public:
 	static Heap* _heap;
@@ -10,16 +9,14 @@ public:
 public:
 	Renderer(const unsigned &w = 640, const unsigned &h = 480);
 	~Renderer();
-
-
+	
 	void BasicRender();
 	void SimpleShrinking();
 	void SmoothScalingOptimized();
+	void OutputSpeedData(const double& endCount, const int& numFrames);
 	void SmoothScalingUO();
 
 private:
-	// RayTracer *rayTracer;
-
 	Vec3f *image;
 
 	unsigned width;

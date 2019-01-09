@@ -3,9 +3,7 @@
 // #include "rapidjson/istreamwrapper.h" // http://rapidjson.org/index.html
 #include "../include/nlohmann/json.hpp" // JSON for Modern C++ by Niels Lohmann - https://github.com/nlohmann/json#arbitrary-types-conversions
 #include "FrameList.h"
-#include <fstream>
 #include <vector>
-#include <strstream>
 
 using namespace nlohmann;
 

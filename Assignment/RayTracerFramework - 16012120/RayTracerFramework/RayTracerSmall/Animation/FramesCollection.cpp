@@ -1,4 +1,6 @@
 #include "framesCollection.h"
+#include <fstream>
+#include <strstream>
 
 Heap* FramesCollection::_heap = nullptr;
 

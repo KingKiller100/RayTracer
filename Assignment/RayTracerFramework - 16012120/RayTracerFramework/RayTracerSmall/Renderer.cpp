@@ -1,13 +1,12 @@
-#pragma once
-
 #include "Renderer.h"
-#include "Animation/FramesCollection.h"
+#include "Animation/framesCollection.h"
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <algorithm>
 #include <fstream>
 #include <chrono>
+#include <thread>
 
 #define M_PI 3.141592653589793
 
@@ -179,6 +178,23 @@ void Renderer::SmoothScalingOptimized()
 
 	std::cout << "Final Render Time: " << endRender.count() << "ms" << std::endl;
 	std::cout << "Average Time: " << endRender.count() / numOfFrames << std::endl;
+
+	OutputSpeedData(endRender.count(), numOfFrames);
+}
+
+void Renderer::OutputSpeedData(const double &endCount, const int &numFrames)
+{
+	// Save result to a PPM image (keep these flags if you compile under Windows)
+	std::string tempString = "./RenderSpeedData.txt";
+	char* filename = (char*)tempString.c_str();
+
+	std::ofstream ofs(filename, std::ios::out | std::ios::binary);
+
+	ofs << "Final Render Time: " << endCount << "ms\r\n" <<
+		"Average Time (milliseconds): " << endCount / numFrames << "ms\r\n" <<
+		"Average Time (seconds) " << endCount / (numFrames * 1000) << "s";
+
+	ofs.close();
 }
 
 void Renderer::SmoothScalingUO()

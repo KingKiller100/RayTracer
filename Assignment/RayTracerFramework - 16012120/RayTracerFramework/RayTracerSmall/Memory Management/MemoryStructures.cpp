@@ -74,7 +74,7 @@ void operator delete(void * pMem)
 	free(pHeader);
 }
 
-void operator delete [](void* pMem) noexcept
+void operator delete[](void* pMem) noexcept
 {
 	operator delete(pMem);
 }
