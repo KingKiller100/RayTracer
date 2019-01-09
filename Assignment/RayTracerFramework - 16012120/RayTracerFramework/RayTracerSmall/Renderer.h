@@ -29,7 +29,7 @@ private:
 	float angle;
 
 private:
-	void SaveToFile(const int& iteration);
+	void SaveToFile(const int& iteration) const;
 	void Render(const std::vector<Sphere> &spheres, const int &iteration);
 };
 

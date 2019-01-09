@@ -57,7 +57,7 @@ void Renderer::Render(const std::vector<Sphere>& spheres, const int &iteration)
 	delete[] image;
 }
 
-void Renderer::SaveToFile(const int &iteration)
+void Renderer::SaveToFile(const int &iteration) const
 {
 	// Save result to a PPM image (keep these flags if you compile under Windows)
 	std::stringstream fileInfo;
@@ -66,7 +66,8 @@ void Renderer::SaveToFile(const int &iteration)
 
 	std::ofstream ofs(filename, std::ios::out | std::ios::binary);
 	for (unsigned i = 0; i < width * height; ++i) {
-		fileInfo << (unsigned char)(std::min(float(1), image[i].x) * 255) <<
+		fileInfo << 
+			(unsigned char)(std::min(float(1), image[i].x) * 255) <<
 			(unsigned char)(std::min(float(1), image[i].y) * 255) <<
 			(unsigned char)(std::min(float(1), image[i].z) * 255);
 	}

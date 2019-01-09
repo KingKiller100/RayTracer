@@ -15,7 +15,7 @@ public:
 
 private:
 	static RayTracer *instance;
-	static Sphere currentSphere;
+	static  Sphere* sphere;
 
 private:
 	RayTracer();

@@ -6,7 +6,7 @@
 
 RayTracer *RayTracer::instance = nullptr;
 Heap *RayTracer::_heap = nullptr;
-Sphere RayTracer::currentSphere = NULL;
+Sphere* RayTracer::sphere = NULL;
 
 RayTracer* RayTracer::GetInstance()
 {
@@ -18,11 +18,15 @@ RayTracer* RayTracer::GetInstance()
 
 RayTracer::RayTracer()
 {
-	// currentSphere = new Sphere();
+	sphere = new Sphere();
 }
 
 
-RayTracer::~RayTracer() = default;
+RayTracer::~RayTracer()
+{
+	delete sphere;
+	sphere = nullptr;
+}
 
 float RayTracer::Mix(const float &a, const float &b, const float &mix)
 {
@@ -43,9 +47,10 @@ Vec3f RayTracer::Trace(const Vec3f& raydir, const std::vector<Sphere>& spheres, 
 {
 	int sphereListSize = spheres.size();
 
-	//if (raydir.length() != 1) std::cerr << "Error " << raydir << std::endl;
 	float tnear = INFINITY;
 	float t0, t1;
+
+	const Sphere* temp = sphere;
 
 	// find intersection of this ray with the sphere in the scene
 	for (unsigned i = 0; i < sphereListSize; ++i) {
@@ -54,17 +59,17 @@ Vec3f RayTracer::Trace(const Vec3f& raydir, const std::vector<Sphere>& spheres, 
 			if (t0 < 0) t0 = t1;
 			if (t0 < tnear) {
 				tnear = t0;
-				currentSphere = spheres[i];
+				temp = &spheres[i];
 			}
 		}
 	}
 
 	// if there's no intersection return black or background color
-	if (currentSphere.radius2 == NULL) return Vec3f(2);
+	if (!temp) return Vec3f(2);
 
 	Vec3f surfaceColor = 0; // color of the ray/surfaceof the object intersected by the ray
 	Vec3f phit = rayorig + raydir * tnear; // point of intersection
-	Vec3f nhit = phit - currentSphere.center; // normal at the intersection point
+	Vec3f nhit = phit - temp->center; // normal at the intersection point
 	nhit.normalize(); // normalize normal direction
 					  // If the normal and the view direction are not opposite to each other
 					  // reverse the normal direction. That also means we are inside the sphere so set
@@ -78,7 +83,7 @@ Vec3f RayTracer::Trace(const Vec3f& raydir, const std::vector<Sphere>& spheres, 
 	nhit = raydirDot > 0 ? nhit.Reverse() : nhit;
 	inside = raydirDot > 0;
 
-	if ((currentSphere.transparency > 0 || currentSphere.reflection > 0) && depth < MAX_RAY_DEPTH) {
+	if ((temp->transparency > 0 || temp->reflection > 0) && depth < MAX_RAY_DEPTH) {
 		float facingratio = -raydir.dot(nhit);
 		// change the mix value to tweak the effect
 		const float fresneleffect = Mix(pow(1 - facingratio, 3), 1, 0.1);
@@ -89,7 +94,7 @@ Vec3f RayTracer::Trace(const Vec3f& raydir, const std::vector<Sphere>& spheres, 
 		Vec3f reflection = Trace(refldir, spheres, depth + 1, phit + nhit * bias);
 		Vec3f refraction = 0;
 		// if the sphere is also transparent compute refraction ray (transmission)
-		if (currentSphere.transparency) 
+		if (temp->transparency) 
 		{
 			float ior = 1.1, eta = (inside) ? ior : 1 / ior; // are we inside or outside the surface?
 			float cosi = -nhit.dot(raydir);
@@ -101,7 +106,7 @@ Vec3f RayTracer::Trace(const Vec3f& raydir, const std::vector<Sphere>& spheres, 
 		// the result is a mix of reflection and refraction (if the sphere is transparent)
 		surfaceColor = (
 			reflection * fresneleffect +
-			refraction * (1 - fresneleffect) * currentSphere.transparency) * currentSphere.surfaceColor;
+			refraction * (1 - fresneleffect) * temp->transparency) * temp->surfaceColor;
 	}
 	else {
 		// it's a diffuse object, no need to raytrace any further
@@ -120,11 +125,11 @@ Vec3f RayTracer::Trace(const Vec3f& raydir, const std::vector<Sphere>& spheres, 
 						}
 					}
 				}
-				surfaceColor += currentSphere.surfaceColor * transmission *
+				surfaceColor += temp->surfaceColor * transmission *
 					std::max(float(0), nhit.dot(lightDirection)) * spheres[i].emissionColor;
 			}
 		}
 	}
 
-	return surfaceColor + currentSphere.emissionColor;
+	return surfaceColor + temp->emissionColor;
 }
