@@ -15,6 +15,11 @@ public:
 		return ::operator new(size, X::_heap);
 	}
 
+	void * operator new[](size_t size)
+	{
+		return MemoryOverride::operator new(size);
+	}
+
 	void operator delete(void *pMem, size_t size)
 	{
 		::operator delete(pMem);

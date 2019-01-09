@@ -25,7 +25,7 @@
 #include "Renderer.h"
 
 // Windows only
-#include <sstream>
+#include <iostream>
 
 #if defined __linux__ || defined __APPLE__
 // "Compiled for Linux
@@ -47,6 +47,8 @@ int main(int argc, char **argv)
 	srand(13);
 
 	renderScene->SmoothScaling();
+
+	std::cin.get();
 
 	return 0;
 }

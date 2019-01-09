@@ -6,7 +6,7 @@
 namespace  maths
 {
 	template<typename T>
-	struct Vec3 : public MemoryOverride<Vec3<T>>
+	struct Vec3 : MemoryOverride<Vec3<T>>
 	{
 		static Heap *_heap;
 		
@@ -45,5 +45,8 @@ namespace  maths
 		}
 	};
 }
+
+template <typename T>
+Heap *maths::Vec3<T>::_heap = nullptr;
 
 typedef maths::Vec3<float> Vec3f;

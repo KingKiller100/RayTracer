@@ -143,6 +143,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation\Frame.cpp" />
+    <ClCompile Include="Animation\FrameList.cpp" />
+    <ClCompile Include="Animation\FramesCollection.cpp" />
     <ClCompile Include="Memory Management\MemoryPool.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shapes\Sphere.cpp" />
@@ -154,9 +157,9 @@
     <ClCompile Include="RayTracer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framesCollection.h" />
-    <ClInclude Include="Frame.h" />
-    <ClInclude Include="FrameList.h" />
+    <ClInclude Include="Animation\framesCollection.h" />
+    <ClInclude Include="Animation\Frame.h" />
+    <ClInclude Include="Animation\FrameList.h" />
     <ClInclude Include="include\nlohmann\adl_serializer.hpp" />
     <ClInclude Include="include\nlohmann\detail\conversions\from_json.hpp" />
     <ClInclude Include="include\nlohmann\detail\conversions\to_chars.hpp" />

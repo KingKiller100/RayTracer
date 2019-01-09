@@ -1,17 +1,16 @@
 #pragma once
-#include "Shapes/Sphere.h"
 #include "RayTracer.h"
-#include "framesCollection.h"
+#include "Animation/FramesCollection.h"
 
 class Renderer : public MemoryOverride<Renderer>
 {
 public:
 	static Heap* _heap;
 
+public:
 	Renderer(const unsigned &w = 640, const unsigned &h = 480);
 	~Renderer();
 
-	void Render(const std::vector<Sphere> &spheres, const int &iteration);
 
 	void BasicRender();
 	void SimpleShrinking();
@@ -22,7 +21,15 @@ private:
 	unsigned width;
 	unsigned height;
 	Vec3f *image;
+	float  aspectratio;
 
-	FramesCollection animations;
+	float invHeight;
+	float invWidth;
+	float fov;
+	float angle;
+
+private:
+	void OutputToFile(const int& iteration);
+	void Render(const std::vector<Sphere> &spheres, const int &iteration);
 };
 
