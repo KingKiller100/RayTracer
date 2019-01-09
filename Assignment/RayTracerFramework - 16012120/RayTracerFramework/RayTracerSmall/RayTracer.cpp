@@ -43,7 +43,7 @@ float RayTracer::Mix(const float &a, const float &b, const float &mix)
 // is the color of the object at the intersection point, otherwise it returns
 // the background color.
 //[/comment]
-Vec3f RayTracer::Trace(const Vec3f& raydir, const std::vector<Sphere>& spheres, const int& depth, const Vec3f& rayorig)
+Vec3f RayTracer::Trace(const Vec3f& raydir, const std::vector<Sphere*>& spheres, const int& depth, const Vec3f& rayorig)
 {
 	int sphereListSize = spheres.size();
 
@@ -55,11 +55,11 @@ Vec3f RayTracer::Trace(const Vec3f& raydir, const std::vector<Sphere>& spheres, 
 	// find intersection of this ray with the sphere in the scene
 	for (unsigned i = 0; i < sphereListSize; ++i) {
 		t0 = t1 = INFINITY;
-		if (spheres[i].intersect(rayorig, raydir, t0, t1)) {
+		if (spheres[i]->intersect(rayorig, raydir, t0, t1)) {
 			if (t0 < 0) t0 = t1;
 			if (t0 < tnear) {
 				tnear = t0;
-				temp = &spheres[i];
+				temp = spheres[i];
 			}
 		}
 	}
@@ -80,8 +80,11 @@ Vec3f RayTracer::Trace(const Vec3f& raydir, const std::vector<Sphere>& spheres, 
 
 	auto raydirDot = raydir.dot(nhit);
 
-	nhit = raydirDot > 0 ? nhit.Reverse() : nhit;
-	inside = raydirDot > 0;
+	if (raydirDot > 0)
+	{
+		nhit = nhit.Reverse();
+		inside = true;
+	}
 
 	if ((temp->transparency > 0 || temp->reflection > 0) && depth < MAX_RAY_DEPTH) {
 		float facingratio = -raydir.dot(nhit);
@@ -111,22 +114,22 @@ Vec3f RayTracer::Trace(const Vec3f& raydir, const std::vector<Sphere>& spheres, 
 	else {
 		// it's a diffuse object, no need to raytrace any further
 		for (unsigned i = 0; i < sphereListSize; ++i) {
-			if (spheres[i].emissionColor.x > 0) {
+			if (spheres[i]->emissionColor.x > 0) {
 				// this is a light
 				Vec3f transmission = 1;
-				Vec3f lightDirection = spheres[i].center - phit;
+				Vec3f lightDirection = spheres[i]->center - phit;
 				lightDirection.normalize();
 				for (unsigned j = 0; j < sphereListSize; ++j) {
 					if (i != j) {
 						float t0, t1;
-						if (spheres[j].intersect(phit + nhit * bias, lightDirection, t0, t1)) {
+						if (spheres[j]->intersect(phit + nhit * bias, lightDirection, t0, t1)) {
 							transmission = 0;
 							break;
 						}
 					}
 				}
 				surfaceColor += temp->surfaceColor * transmission *
-					std::max(float(0), nhit.dot(lightDirection)) * spheres[i].emissionColor;
+					std::max(float(0), nhit.dot(lightDirection)) * spheres[i]->emissionColor;
 			}
 		}
 	}

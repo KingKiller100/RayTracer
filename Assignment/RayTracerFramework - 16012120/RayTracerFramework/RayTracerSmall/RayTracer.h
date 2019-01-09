@@ -11,7 +11,7 @@ public:
 
 	~RayTracer();
 
-	static Vec3f Trace(const Vec3f &raydir, const std::vector<Sphere> &spheres, const int &depth = 0, const Vec3f &rayorig = Vec3f(0));
+	static Vec3f Trace(const Vec3f &raydir, const std::vector<Sphere*> &spheres, const int &depth = 0, const Vec3f &rayorig = Vec3f(0));
 
 private:
 	static RayTracer *instance;

@@ -41,12 +41,12 @@
 //[/comment]
 int main(int argc, char **argv)
 {
-	Renderer* renderScene = new Renderer();
+	Renderer* renderScene = new Renderer(1920, 1080);
 
 	// This sample only allows one choice per program execution. Feel free to improve upon this
 	srand(13);
 
-	renderScene->SmoothScaling();
+	renderScene->SmoothScalingOptimized();
 
 	std::cin.get();
 

@@ -14,15 +14,18 @@ public:
 
 	void BasicRender();
 	void SimpleShrinking();
-	void SmoothScaling();
+	void SmoothScalingOptimized();
 	void SmoothScalingUO();
 
 private:
+	// RayTracer *rayTracer;
+
+	Vec3f *image;
+
 	unsigned width;
 	unsigned height;
-	Vec3f *image;
-	float  aspectratio;
 
+	float aspectratio;
 	float invHeight;
 	float invWidth;
 	float fov;
@@ -30,6 +33,6 @@ private:
 
 private:
 	void SaveToFile(const int& iteration) const;
-	void Render(const std::vector<Sphere> &spheres, const int &iteration);
+	void Render(const std::vector<Sphere*> &spheres, const int &iteration);
 };
 
