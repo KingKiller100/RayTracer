@@ -52,12 +52,12 @@ void Renderer::Render(const std::vector<Sphere>& spheres, const int &iteration)
 		}
 	}
 
-	OutputToFile(iteration);
+	SaveToFile(iteration);
 	
 	delete[] image;
 }
 
-void Renderer::OutputToFile(const int &iteration)
+void Renderer::SaveToFile(const int &iteration)
 {
 	// Save result to a PPM image (keep these flags if you compile under Windows)
 	std::stringstream fileInfo;
