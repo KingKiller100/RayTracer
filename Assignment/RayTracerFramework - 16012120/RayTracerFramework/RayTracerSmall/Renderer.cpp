@@ -20,15 +20,11 @@ Renderer::Renderer(const unsigned &w, const unsigned &h): width(w), height(h), i
 	invWidth = 1 / float(width);
 	invHeight = 1 / float(height);
 	angle = tan(M_PI * 0.5 * fov / 180.);
-
-	// rayTracer = RayTracer::GetInstance();
 }
 
 
 Renderer::~Renderer()
 {
-	delete image;
-	image = nullptr;
 }
 
 //[comment]
@@ -82,53 +78,76 @@ void Renderer::SaveToFile(const int &iteration) const
 
 void Renderer::BasicRender()
 {
-	std::vector<Sphere*> spheres;
-	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
+	int numOfFrames = 1;
+	FramesCollection animations;
+	animations.ReadJSON("Data\\spheresData.json", numOfFrames);
 
-	spheres.push_back(new Sphere(Vec3f(0.0, -10004, -20), 10000, Vec3f(0.20, 0.20, 0.20), 0, 0.0));
-	spheres.push_back(new Sphere(Vec3f(0.0, 0, -20), 4, Vec3f(1.00, 0.32, 0.36), 1, 0.5)); // The radius paramter is the value we will change
-	spheres.push_back(new Sphere(Vec3f(5.0, -1, -15), 2, Vec3f(0.90, 0.76, 0.46), 1, 0.0));
-	spheres.push_back(new Sphere(Vec3f(5.0, 0, -25), 3, Vec3f(0.65, 0.77, 0.97), 1, 0.0));
-	
+	std::vector<Sphere*> spheres;
+
+	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
+	for (unsigned i = 0; i < animations.numOfObjects; ++i)
+	{
+		Frame frame = *animations.framesCollection[i]->framesList[0];
+		animations.UpdateFrame(frame, i, numOfFrames);
+		spheres.emplace_back(new Sphere(frame.pos, frame.scale, frame.brushColour, 1, 0.0));
+	}
+		
 	// This creates a file, titled 1.ppm in the current working directory
 	Render(spheres, 1);
+
+	spheres.clear();
 }
 
 void Renderer::SimpleShrinking()
 {
+	int numOfFrames = 4;
+
+	FramesCollection animations;
+	animations.ReadJSON("Data\\spheresData.json", 101);
+
 	std::vector<Sphere*> spheres;
 	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < numOfFrames; i++)
 	{
+		Frame frame1 = *animations.framesCollection[i]->framesList[0];
+		Frame frame2 = *animations.framesCollection[i]->framesList[1];
+		Frame frame3 = *animations.framesCollection[i]->framesList[2];
+		Frame frame4 = *animations.framesCollection[i]->framesList[3];
+
+		animations.UpdateFrame(frame1, 0, 4);
+		animations.UpdateFrame(frame2, 1, 4);
+		animations.UpdateFrame(frame3, 2, 4);
+		animations.UpdateFrame(frame4, 3, 4);
+
 		if (i == 0)
 		{
-			spheres.push_back(new Sphere(Vec3f(0.0, -10004, -20), 10000, Vec3f(0.20, 0.20, 0.20), 0, 0.0));
-			spheres.push_back(new Sphere(Vec3f(0.0, 0, -20), 4, Vec3f(1.00, 0.32, 0.36), 1, 0.5)); // The radius paramter is the value we will change
-			spheres.push_back(new Sphere(Vec3f(5.0, -1, -15), 2, Vec3f(0.90, 0.76, 0.46), 1, 0.0));
-			spheres.push_back(new Sphere(Vec3f(5.0, 0, -25), 3, Vec3f(0.65, 0.77, 0.97), 1, 0.0));
+			spheres.emplace_back(new Sphere(frame1.pos, frame1.scale, frame1.brushColour, 1, 0.0));
+			spheres.emplace_back(new Sphere(frame2.pos, frame2.scale, frame2.brushColour, 1, 0.0));
+			spheres.emplace_back(new Sphere(frame3.pos, frame3.scale, frame3.brushColour, 1, 0.0));
+			spheres.emplace_back(new Sphere(frame4.pos, frame4.scale, frame4.brushColour, 1, 0.0));
 
 		}
 		else if (i == 1)
 		{
-			spheres.push_back(new Sphere(Vec3f(0.0, -10004, -20), 10000, Vec3f(0.20, 0.20, 0.20), 0, 0.0));
-			spheres.push_back(new Sphere(Vec3f(0.0, 0, -20), 3, Vec3f(1.00, 0.32, 0.36), 1, 0.5)); // Radius--
-			spheres.push_back(new Sphere(Vec3f(5.0, -1, -15), 2, Vec3f(0.90, 0.76, 0.46), 1, 0.0));
-			spheres.push_back(new Sphere(Vec3f(5.0, 0, -25), 3, Vec3f(0.65, 0.77, 0.97), 1, 0.0));
+			spheres.emplace_back(new Sphere(frame1.pos, frame1.scale, frame1.brushColour, 1, 0.0));
+			spheres.emplace_back(new Sphere(frame2.pos, frame2.scale, frame2.brushColour, 1, 0.0));
+			spheres.emplace_back(new Sphere(frame3.pos, frame3.scale, frame3.brushColour, 1, 0.0));
+			spheres.emplace_back(new Sphere(frame4.pos, frame4.scale, frame4.brushColour, 1, 0.0));
 		}
 		else if (i == 2)
 		{
-			spheres.push_back(new Sphere(Vec3f(0.0, -10004, -20), 10000, Vec3f(0.20, 0.20, 0.20), 0, 0.0));
-			spheres.push_back(new Sphere(Vec3f(0.0, 0, -20), 2, Vec3f(1.00, 0.32, 0.36), 1, 0.5)); // Radius--
-			spheres.push_back(new Sphere(Vec3f(5.0, -1, -15), 2, Vec3f(0.90, 0.76, 0.46), 1, 0.0));
-			spheres.push_back(new Sphere(Vec3f(5.0, 0, -25), 3, Vec3f(0.65, 0.77, 0.97), 1, 0.0));
+			spheres.emplace_back(new Sphere(frame1.pos, frame1.scale, frame1.brushColour, 1, 0.0));
+			spheres.emplace_back(new Sphere(frame2.pos, frame2.scale, frame2.brushColour, 1, 0.0));
+			spheres.emplace_back(new Sphere(frame3.pos, frame3.scale, frame3.brushColour, 1, 0.0));
+			spheres.emplace_back(new Sphere(frame4.pos, frame4.scale, frame4.brushColour, 1, 0.0));
 		}
 		else if (i == 3)
 		{
-			spheres.push_back(new Sphere(Vec3f(0.0, -10004, -20), 10000, Vec3f(0.20, 0.20, 0.20), 0, 0.0));
-			spheres.push_back(new Sphere(Vec3f(0.0, 0, -20), 1, Vec3f(1.00, 0.32, 0.36), 1, 0.5)); // Radius--
-			spheres.push_back(new Sphere(Vec3f(5.0, -1, -15), 2, Vec3f(0.90, 0.76, 0.46), 1, 0.0));
-			spheres.push_back(new Sphere(Vec3f(5.0, 0, -25), 3, Vec3f(0.65, 0.77, 0.97), 1, 0.0));
+			spheres.emplace_back(new Sphere(frame1.pos, frame1.scale, frame1.brushColour, 1, 0.0));
+			spheres.emplace_back(new Sphere(frame2.pos, frame2.scale, frame2.brushColour, 1, 0.0));
+			spheres.emplace_back(new Sphere(frame3.pos, frame3.scale, frame3.brushColour, 1, 0.0));
+			spheres.emplace_back(new Sphere(frame4.pos, frame4.scale, frame4.brushColour, 1, 0.0));
 		}
 
 		Render(spheres, i);
@@ -141,15 +160,15 @@ void Renderer::SimpleShrinking()
 void Renderer::SmoothScalingOptimized()
 {
 	auto startRender = std::chrono::system_clock::now();
-
-	FramesCollection animations; 
-
-	std::vector<Sphere*> spheres;
-
+	std::vector<double> avgRender;
 	int numOfFrames = 101;
+
+	FramesCollection animations;
 
 	animations.ReadJSON("Data\\spheresData.json", numOfFrames);
 
+	std::vector<Sphere*> spheres;
+	
 	numOfFrames--;
 
 	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
@@ -157,22 +176,29 @@ void Renderer::SmoothScalingOptimized()
 	{
 		auto start = std::chrono::system_clock::now();
 
-		for (int i = 0; i < animations.numOfObjects; ++i)
+		for (unsigned i = 0; i < animations.numOfObjects; ++i)
 		{
 			Frame frame = *animations.framesCollection[i]->framesList[r];
 			animations.UpdateFrame(frame, r, numOfFrames);
 			spheres.emplace_back(new Sphere(frame.pos, frame.scale, frame.brushColour, 1, 0.0));
 		}
 
-		Render(spheres, r);
+		auto end = std::chrono::duration_cast <std::chrono::microseconds>(std::chrono::system_clock::now() - start);		
+		avgRender.emplace_back(end.count());
+
+		Render(spheres, int(r));
 
 		// Dont forget to clear the Vector holding the spheres.
-		spheres.clear();
-
-		auto end = std::chrono::duration_cast <Milliseconds>(std::chrono::system_clock::now() - start);
-		
-		std::cout << "Render Time: " << end.count() << "ms" << std::endl;
+		spheres.erase(spheres.begin(), spheres.end());
 	}
+
+	double sum = 0.f;
+	for (double& avg_render : avgRender)
+	{
+		sum += avg_render;
+	}
+
+	std::cout << "Average Time Sphere Instantiated: " << sum / avgRender.size() << "ms" << std::endl;
 
 	auto endRender = std::chrono::duration_cast <Milliseconds>(std::chrono::system_clock::now() - startRender);
 
@@ -182,6 +208,11 @@ void Renderer::SmoothScalingOptimized()
 	std::cout << "Average Time: " << endRender.count() / numOfFrames << std::endl;
 
 	OutputSpeedData(endRender.count(), numOfFrames);
+
+	for (int i = 0; i < HeapFactory::GetHeapContainer().size(); ++i)
+	{
+		HeapFactory::WalkTheHeap(i);
+	}
 }
 
 void Renderer::OutputSpeedData(const double &endCount, const int &numFrames)

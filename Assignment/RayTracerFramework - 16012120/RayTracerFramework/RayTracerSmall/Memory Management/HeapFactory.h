@@ -10,6 +10,8 @@ public:
 	static Heap *CreateHeap(const char * szName);
 	static Heap* GetDefaultHeap();
 
+	static std::vector<Heap*> &GetHeapContainer();
+
 	static void WalkTheHeap(const size_t &id);
 
 private:

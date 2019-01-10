@@ -38,7 +38,7 @@ void FramesCollection::ReadJSON(const char* path, unsigned frameNum)
 			f.scale = json[i]["framesList"][j]["scale"].get<double>();
 			f.pos.x = json[i]["framesList"][j]["posX"].get<double>();
 			f.pos.y = json[i]["framesList"][j]["posY"].get<double>();
-			f.pos.z = -json[i]["framesList"][j]["posZ"].get<double>() - 20;
+			f.pos.z = -json[i]["framesList"][j]["posZ"].get<double>() - 30;
 			f.brushColour.x = json[i]["framesList"][j]["brushR"].get<double>() * 0.003921568627451; // byte value divided by 255
 			f.brushColour.y = json[i]["framesList"][j]["brushG"].get<double>() * 0.003921568627451; // byte value divided by 255
 			f.brushColour.z = json[i]["framesList"][j]["brushB"].get<double>() * 0.003921568627451; // byte value divided by 255

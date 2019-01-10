@@ -1,5 +1,6 @@
 #include "RayTracer.h"
 #include <algorithm>
+#include <iostream>
 
 // This variable controls the maximum recursion depth
 #define MAX_RAY_DEPTH 5

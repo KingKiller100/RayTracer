@@ -45,8 +45,15 @@ int main(int argc, char **argv)
 
 	// This sample only allows one choice per program execution. Feel free to improve upon this
 	srand(13);
-
+	
 	renderScene->SmoothScalingOptimized();
+
+	std::cin.get();
+
+	delete renderScene;
+
+	for (int i = 0; i < HeapFactory::GetHeapContainer().size(); ++i)
+		HeapFactory::WalkTheHeap(i);
 
 	std::cin.get();
 

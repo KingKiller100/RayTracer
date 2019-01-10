@@ -37,6 +37,11 @@ Heap* HeapFactory::GetDefaultHeap()
 	return _defaultHeap;
 }
 
+std::vector<Heap*>& HeapFactory::GetHeapContainer()
+{
+	return heapContainer;
+}
+
 void HeapFactory::WalkTheHeap(const size_t &id)
 {
 	if (id == 0)
