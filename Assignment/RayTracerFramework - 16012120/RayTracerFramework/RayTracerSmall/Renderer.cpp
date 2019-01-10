@@ -176,6 +176,8 @@ void Renderer::SmoothScalingOptimized()
 
 	auto endRender = std::chrono::duration_cast <Milliseconds>(std::chrono::system_clock::now() - startRender);
 
+	numOfFrames++;
+
 	std::cout << "Final Render Time: " << endRender.count() << "ms" << std::endl;
 	std::cout << "Average Time: " << endRender.count() / numOfFrames << std::endl;
 
