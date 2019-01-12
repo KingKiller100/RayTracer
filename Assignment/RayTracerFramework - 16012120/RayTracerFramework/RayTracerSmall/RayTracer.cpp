@@ -29,7 +29,7 @@ RayTracer::~RayTracer()
 	sphere = nullptr;
 }
 
-float RayTracer::Mix(const float &a, const float &b, const float &mix)
+float RayTracer::Mix(const float &a, const float &b, const float &mix) const
 {
 	return b * mix + a * (1 - mix);
 }
@@ -44,7 +44,7 @@ float RayTracer::Mix(const float &a, const float &b, const float &mix)
 // is the color of the object at the intersection point, otherwise it returns
 // the background color.
 //[/comment]
-Vec3f RayTracer::Trace(const Vec3f& raydir, const std::vector<Sphere*>& spheres, const int& depth, const Vec3f& rayorig)
+Vec3f RayTracer::Trace(const Vec3f& raydir, const std::vector<Sphere*>& spheres, const int& depth, const Vec3f& rayorig) const
 {
 	int sphereListSize = spheres.size();
 
@@ -98,7 +98,7 @@ Vec3f RayTracer::Trace(const Vec3f& raydir, const std::vector<Sphere*>& spheres,
 		Vec3f reflection = Trace(refldir, spheres, depth + 1, phit + nhit * bias);
 		Vec3f refraction = 0;
 		// if the sphere is also transparent compute refraction ray (transmission)
-		if (temp->transparency) 
+		if (temp->transparency)
 		{
 			float ior = 1.1, eta = (inside) ? ior : 1 / ior; // are we inside or outside the surface?
 			float cosi = -nhit.dot(raydir);

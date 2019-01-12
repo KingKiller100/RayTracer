@@ -11,7 +11,7 @@ public:
 
 	~RayTracer();
 
-	static Vec3f Trace(const Vec3f &raydir, const std::vector<Sphere*> &spheres, const int &depth = 0, const Vec3f &rayorig = Vec3f(0));
+	Vec3f Trace(const Vec3f &raydir, const std::vector<Sphere*> &spheres, const int &depth = 0, const Vec3f &rayorig = Vec3f(0)) const;
 
 private:
 	static RayTracer *instance;
@@ -19,7 +19,6 @@ private:
 
 private:
 	RayTracer();
-	static float Mix(const float& a, const float& b, const float& mix);
-
+	float Mix(const float& a, const float& b, const float& mix) const;
 };
 
