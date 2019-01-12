@@ -23,7 +23,6 @@ Renderer::Renderer(const unsigned &w, const unsigned &h): width(w), height(h), m
 	angle = tan(M_PI * 0.5 * fov / 180.);
 
  	mainImage = new Vec3f[width * height];
-	trueImage = new Vec3c[width * height];
 }
 
 
@@ -32,8 +31,6 @@ Renderer::~Renderer()
 	delete[] mainImage;
 	mainImage = nullptr;
 
-	delete[] trueImage;
-	trueImage = nullptr;
 }
 
 //[comment]
@@ -43,131 +40,111 @@ Renderer::~Renderer()
 //[/comment]
 void Renderer::Render(const std::vector<Sphere*>& spheres, const int &iteration)
 {
-	// mutex.lock();
 	numOfCores = std::thread::hardware_concurrency();
 	auto** threads = new Thread*[numOfCores];
 
 	Vec3f *im = mainImage;
-	Vec3c *ti = trueImage;
 
-	for (unsigned i = 0; i < numOfCores; ++i)	
-		threads[i] = new Thread(&Renderer::RayTraceThreaded, this, spheres, mainImage + (width * ((height / numOfCores) * i)), trueImage + (width * ((height / numOfCores) * i)));
-		
+	// Threaded Version
+
+	std::string** s = new std::string*[numOfCores];
+	
+	for (unsigned i = 0; i < numOfCores; ++i)
+	{
+		s[i] = new std::string("");
+		threads[i] = new Thread(&Renderer::RayTraceThreaded, this, spheres, mainImage + (width * ((height / numOfCores) * i)), i, s[i]);
+	}
+	
 	for (unsigned i = 0; i < numOfCores; ++i)
 		threads[i]->join();
 
-	// RayTrace(spheres, im, ti);
+	SaveSSFile(s, iteration);
 
-	// auto* ss = new std::stringstream[numOfCores];
-	//
-	// for (unsigned i = 0; i < numOfCores; ++i)	
-	// 	threads[i] = new Thread(&Renderer::SaveToStringStreamThreaded, this, ss[i], i);
-	//
-	//
-	// for (unsigned i = 0; i < numOfCores; ++i)
-	// 	threads[i]->join();
-	//
-	// SaveSSFile(ss, iteration);
-
-	SaveToFile(iteration);
-	
-	// mutex.unlock();
+	// // Unthreaded Version
+	// std::string fileInfo = std::string("");
+	// RayTrace(spheres, im, fileInfo);
+		
+	// SaveToFile(iteration, fileInfo);
 }
 
-void Renderer::RayTraceThreaded(const std::vector<Sphere*>& spheres, Vec3f *imageSegment, Vec3c *trueImageSegment)
+void Renderer::RayTraceThreaded(const std::vector<Sphere*> &spheres, Vec3f *imageSegment, const int &threadIndex, std::string *s)
 {
 	float xOffset;
 	float yOffset;
-	unsigned limit = height / numOfCores;
+
+	unsigned difference = height / numOfCores;
+	unsigned startPointer = difference * threadIndex;
+	unsigned endPointer = startPointer + difference;
 
 	// Trace rays
-	for (unsigned y = 0; y < limit; ++y) {
-		for (unsigned x = 0; x < width; ++x, ++imageSegment, ++trueImageSegment) {
+	for (unsigned y = startPointer; y < endPointer; ++y) {
+		for (unsigned x = 0; x < width; ++x, ++imageSegment) {
 			xOffset = (2 * ((x + 0.5) * invWidth) - 1) * angle * aspectRatio;
 			yOffset = (1 - 2 * ((y + 0.5) * invHeight)) * angle;
 			Vec3f raydir(xOffset, yOffset, -1);
 			raydir.normalize();
 
-			*imageSegment = RayTracer::GetInstance()->Trace(raydir, spheres);
-			*trueImageSegment = Vec3c((unsigned char)(std::min(1.0f, imageSegment->x) * 255), (unsigned char)(std::min(1.0f, imageSegment->y) * 255), (unsigned char)(std::min(1.0f, imageSegment->z) * 255));
-			
-			if (trueImageSegment->x != 255)
-				int a = 10;
+			*imageSegment  = RayTracer::GetInstance()->Trace(raydir, spheres);
+			*s += static_cast<unsigned char>(std::min(float(1), imageSegment->x) * 255);
+			*s += static_cast<unsigned char>(std::min(float(1), imageSegment->y) * 255);
+			*s += static_cast<unsigned char>(std::min(float(1), imageSegment->z) * 255);			
 		}
 	}
 }
 
-void Renderer::RayTrace(const std::vector<Sphere*>& spheres, Vec3f *imageSegment, Vec3c *trueImageSegment)
+void Renderer::RayTrace(const std::vector<Sphere*>& spheres, Vec3f *imageSegment, std::string &fileInfo)
 {
 	float xOffset;
 	float yOffset;
 
 	// Trace rays
 	for (unsigned y = 0; y < height; ++y) {
-		for (unsigned x = 0; x < width; ++x, ++imageSegment, ++trueImageSegment) {
+		for (unsigned x = 0; x < width; ++x, ++imageSegment) {
 			xOffset = (2 * ((x + 0.5) * invWidth) - 1) * angle * aspectRatio;
 			yOffset = (1 - 2 * ((y + 0.5) * invHeight)) * angle;
 			Vec3f raydir(xOffset, yOffset, -1);
 			raydir.normalize();
-			*imageSegment = RayTracer::GetInstance()->Trace(raydir, spheres);
-			*trueImageSegment = Vec3c(static_cast<unsigned char>(std::min(float(1), imageSegment->x) * 255),
-				static_cast<unsigned char>(std::min(float(1), imageSegment->y) * 255),
-				static_cast<unsigned char>(std::min(float(1), imageSegment->z) * 255));
 
-			if (trueImageSegment->x != 255)
-			int a = 10;
+			*imageSegment = RayTracer::GetInstance()->Trace(raydir, spheres);
+			fileInfo += static_cast<unsigned char>(std::min(float(1), imageSegment->x) * 255);
+			fileInfo += static_cast<unsigned char>(std::min(float(1), imageSegment->y) * 255);
+			fileInfo += static_cast<unsigned char>(std::min(float(1), imageSegment->z) * 255);
 		}
 	}
 }
 
-
-void Renderer::SaveSSFile(std::stringstream *ss, const int &iteration)
+void Renderer::SaveSSFile(std::string** s, const int &iteration)
 {
-	std::string tempString = std::string("./spheres") + std::to_string(iteration) + std::string(".ppm");
+	std::string tempString = std::string("./spheres" + std::to_string(iteration) + ".ppm");
 	char* filename = const_cast<char*>(tempString.c_str());
-
-	std::stringstream fileInfo;
-	for (unsigned i = 0; i < numOfCores; ++i)
-		fileInfo << ss[i].str();
-
+	
 	std::ofstream ofs(filename, std::ios::out | std::ios::binary);
-
+	
 	ofs.flush();
+	std::string fullData = "\n";
 	ofs << "P6\n" << width << " " << height << "\n255\n";
-	ofs.write(fileInfo.str().c_str(), height * width * 3);
+	for (unsigned i = 0; i < numOfCores; ++i)
+	{
+		fullData += *s[i];
+	}
+
+	ofs << fullData;
 	ofs.close();
 
 	std::cout << "Rendered and saved " << filename << std::endl;
 }
 
-void Renderer::SaveToStringStreamThreaded(std::stringstream &ss, const int &threadIndex) 
-{
-	const unsigned difference = (height / numOfCores);
-	const unsigned startPoint =  difference * threadIndex;
-
-	for (unsigned i = startPoint; i < startPoint + difference; ++i)
-	{
-		ss << trueImage[i].x << trueImage[i].y << trueImage[i].z;
-	}
-}
-
-void Renderer::SaveToFile(const int &iteration) const
+void Renderer::SaveToFile(const int &iteration, std::string &fileInfo) const
 {
 	// Save result to a PPM image (keep these flags if you compile under Windows)
-	std::stringstream fileInfo;
-	std::string tempString = std::string("./spheres") + std::to_string(iteration) + std::string(".ppm");
+	std::string tempString = std::string("./spheres" + std::to_string(iteration) + ".ppm");
 	char* filename = (char*)tempString.c_str();
 
 	std::ofstream ofs(filename, std::ios::out | std::ios::binary);
 
-	for (unsigned i = 0; i < width * height; ++i) {
-		fileInfo << trueImage[i].x << trueImage[i].y << trueImage[i].z;
-	}
-
-	ofs.flush();
 	ofs << "P6\n" << width << " " << height << "\n255\n";
-	// ofs << fileInfo.str().c_str();
-	ofs.write(fileInfo.str().c_str(), height * width * 3);
+	ofs.flush();
+	ofs << fileInfo;
 	ofs.close();
 
 	std::cout << "Rendered and saved " << filename << std::endl;
@@ -194,10 +171,11 @@ void Renderer::SaveToFile(const int &iteration) const
 //
 // 	spheres.clear();
 // }
-//
-void Renderer::SimpleShrinking()
+
+void Renderer::SampleFrames()
 {
 	auto startRender = std::chrono::system_clock::now();
+	double totalTime= 0.0;
 	
 	int numOfFrames = 4;
 
@@ -209,7 +187,6 @@ void Renderer::SimpleShrinking()
 
 	for (int i = 0; i < numOfFrames; i++)
 	{
-		auto start = std::chrono::system_clock::now();
 
 		Frame frame1 = *animations.framesCollection[0]->framesList[i];
 		Frame frame2 = *animations.framesCollection[1]->framesList[i];
@@ -251,18 +228,26 @@ void Renderer::SimpleShrinking()
 			spheres.emplace_back(new Sphere(frame4.pos, frame4.scale, frame4.brushColour, 1, 0.9));
 		}
 
+		auto start = std::chrono::system_clock::now();
+
 		Render(spheres, i);
 
 		auto end = std::chrono::duration_cast <Milliseconds>(std::chrono::system_clock::now() - start);
 		std::cout << "Render Time: " << end.count() << "ms" << std::endl;
 
+		totalTime += end.count();
 		// Dont forget to clear the Vector holding the spheres.
 		spheres.clear();
 	}
 	
-	auto endRender = std::chrono::duration_cast <Milliseconds>(std::chrono::system_clock::now() - startRender);
-	std::cout << "Final Render Time: " << endRender.count() << "ms" << std::endl;
-	std::cout << "Average Time: " << endRender.count() / double(numOfFrames*1000) << " seconds" << std::endl;
+	std::cout << "Final Render Time: " << totalTime << "ms" << std::endl;
+	std::cout << "Average Time: " << totalTime / double(numOfFrames*1000) << " seconds" << std::endl;
+
+	for (Sphere* sphere : spheres)
+	{
+		delete sphere;
+		sphere = nullptr;
+	}
 }
 
 void Renderer::SmoothScalingOptimized()

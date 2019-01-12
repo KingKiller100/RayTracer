@@ -2,7 +2,7 @@
 #include "../Memory Management/MemoryOverride.h"
 #include "../Maths/Vec3.h"
 
-struct Frame : public MemoryOverride<Frame>
+struct Frame : MemoryOverride<Frame>
 {
 	static Heap *_heap;
 

@@ -6,7 +6,7 @@ Heap* FramesCollection::_heap = nullptr;
 
 FramesCollection::~FramesCollection()
 {
-	for (FramesList* frames_list : framesCollection)
+	for (auto *frames_list : framesCollection)
 	{
 		delete frames_list;
 		frames_list = nullptr;

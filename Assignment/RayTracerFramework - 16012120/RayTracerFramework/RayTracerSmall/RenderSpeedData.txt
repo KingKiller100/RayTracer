@@ -1,3 +1,3 @@
-Final Render Time: 100063ms
-Average Time (milliseconds): 990.723ms
-Average Time (seconds) 0.990723s
+Final Render Time: 93534ms
+Average Time (milliseconds): 926.079ms
+Average Time (seconds) 0.926079s

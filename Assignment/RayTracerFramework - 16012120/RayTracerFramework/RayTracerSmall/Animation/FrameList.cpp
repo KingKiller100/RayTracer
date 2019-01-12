@@ -10,7 +10,7 @@ FramesList::FramesList(int size)
 
 FramesList::~FramesList()
 {
-	for (Frame* frame : framesList)
+	for (auto* frame : framesList)
 	{
 		delete frame;
 		frame = nullptr;
