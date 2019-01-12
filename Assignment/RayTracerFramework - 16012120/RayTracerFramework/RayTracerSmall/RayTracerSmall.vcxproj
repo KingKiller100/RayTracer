@@ -87,9 +87,9 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,7 +150,6 @@
     <ClCompile Include="Memory Management\MemoryPool.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shapes\Sphere.cpp" />
-    <ClCompile Include="Maths\Vec3.cpp" />
     <ClCompile Include="Memory Management\Heap.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Memory Management\HeapFactory.cpp" />

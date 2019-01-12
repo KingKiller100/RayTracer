@@ -37,6 +37,13 @@ namespace  maths
 		Vec3<T> operator + (const Vec3<T> &v) const											{ return Vec3<T>(x + v.x, y + v.y, z + v.z); }
 		Vec3<T>& operator += (const Vec3<T> &v)												{ return Vec3<T>(x += v.x, y += v.y, z += v.z); }
 		Vec3<T>& operator *= (const Vec3<T> &v)												{ return Vec3<T>(x *= v.x, y *= v.y, z *= v.z); }
+		// Vec3<T>& operator = (const Vec3<T> &v)
+		// {
+		// 	x = v.x;
+		// 	y = v.y;
+		// 	z = v.z; 
+		// 	return *this;
+		// }
 		
 		friend std::ostream & operator << (std::ostream &os, const Vec3<T> &v)
 		{
@@ -50,3 +57,4 @@ template <typename T>
 Heap *maths::Vec3<T>::_heap = nullptr;
 
 typedef maths::Vec3<float> Vec3f;
+typedef maths::Vec3<unsigned char> Vec3c;

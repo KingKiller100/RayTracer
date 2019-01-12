@@ -24,7 +24,7 @@ public:
 	void UpdateFrame(Frame &frame, const int &frameNum, const int &maxframes);
 
 private:
-	Vec3f Interpolate(const Vec3f &next, const Vec3f &prev, const int &deltaFrames, const int &timerChange);
-	float Interpolate(const float &next, const float &prev, const int &deltaFrames, const int &timerChange);
-
+	float Interpolate(const float &next, const float &prev, const int &deltaFrames, const int &timerChange) const;
+	Vec3f Interpolate(const Vec3f& next, const Vec3f& prev, const int& deltaFrames, const int& timerChange) const;
+	Vec3c Interpolate(const Vec3c & next, const Vec3c & prev, const int & deltaFrames, const int & timerChange) const;
 };

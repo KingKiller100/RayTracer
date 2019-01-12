@@ -19,7 +19,7 @@ RayTracer* RayTracer::GetInstance()
 
 RayTracer::RayTracer()
 {
-	sphere = new Sphere();
+	sphere = nullptr;
 }
 
 
