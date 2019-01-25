@@ -1,18 +1,19 @@
 ﻿  Renderer.cpp
 c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(103): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(104): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(211): warning C4305: 'argument': truncation from 'double' to 'const float'
-c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(228): warning C4305: 'argument': truncation from 'double' to 'const float'
-c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(266): warning C4018: '<=': signed/unsigned mismatch
-c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(270): warning C4018: '<': signed/unsigned mismatch
-c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(294): warning C4244: 'argument': conversion from '__int64' to 'const double', possible loss of data
-c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(324): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(325): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(326): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(327): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\maths\vec3.h(25): warning C4715: 'maths::Vec3<float>::normalize': not all control paths return a value
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(94): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(95): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(115): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(116): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(222): warning C4305: 'argument': truncation from 'double' to 'const float'
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(239): warning C4305: 'argument': truncation from 'double' to 'const float'
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(281): warning C4018: '<': signed/unsigned mismatch
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(311): warning C4244: 'argument': conversion from '__int64' to 'const double', possible loss of data
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(313): warning C4244: 'argument': conversion from '__int64' to 'const double', possible loss of data
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(360): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(361): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(362): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\renderer.cpp(363): warning C4305: 'argument': truncation from 'double' to 'float'
 c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\maths\vec3.h(39): warning C4172: returning address of local variable or temporary
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\maths\vec3.h(25): warning C4715: 'maths::Vec3<float>::normalize': not all control paths return a value
+c:\users\d012120g\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\maths\vec3.h(23): warning C4172: returning address of local variable or temporary
   RayTracerSmall.vcxproj -> C:\Users\d012120g\Documents\RayTracer\Assignment\RayTracerFramework - 16012120\RayTracerFramework\Debug\RayTracerSmall.exe

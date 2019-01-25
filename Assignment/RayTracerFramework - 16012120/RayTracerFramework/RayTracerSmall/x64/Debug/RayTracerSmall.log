@@ -1,0 +1,4 @@
+﻿  main.cpp
+c:\users\d012120g.student\documents\raytracer\assignment\raytracerframework - 16012120\raytracerframework\raytracersmall\main.cpp(34): warning C4005: 'INFINITY': macro redefinition
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\corecrt_math.h(90): note: see previous definition of 'INFINITY'
+  RayTracerSmall.vcxproj -> C:\Users\d012120g.STUDENT\Documents\RayTracer\Assignment\RayTracerFramework - 16012120\RayTracerFramework\x64\Debug\RayTracerSmall.exe

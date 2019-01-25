@@ -6,10 +6,10 @@ Heap* FramesCollection::_heap = nullptr;
 
 FramesCollection::~FramesCollection()
 {
-	for (auto *frames_list : framesCollection)
+	for (auto *framesList : framesCollection)
 	{
-		delete frames_list;
-		frames_list = nullptr;
+		delete framesList;
+		framesList = nullptr;
 	}
 
 	framesCollection.clear();

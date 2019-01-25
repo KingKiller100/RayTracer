@@ -1,0 +1,4 @@
+Resolution: 1920x1080
+Final Render Time: 18480ms
+Average Time (milliseconds): 182.97ms
+Average Time (seconds) 0.18297s

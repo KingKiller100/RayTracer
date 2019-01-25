@@ -40,10 +40,20 @@ Renderer::~Renderer()
 //[/comment]
 void Renderer::Render(const std::vector<Sphere*>& spheres, const int &iteration)
 {
+	Vec3f *im = mainImage;
+		
+	// Unthreaded Version
+	std::string fileInfo = std::string("");
+	RayTrace(spheres, im, fileInfo);		
+	SaveToFile(iteration, fileInfo);
+}
+
+void Renderer::RenderThreaded(const std::vector<Sphere*>& spheres, const int &iteration)
+{
+	Vec3f *im = mainImage;
+
 	numOfCores = std::thread::hardware_concurrency();
 	auto** threads = new Thread*[numOfCores];
-
-	Vec3f *im = mainImage;
 
 	// Threaded Version
 
@@ -56,15 +66,17 @@ void Renderer::Render(const std::vector<Sphere*>& spheres, const int &iteration)
 	}
 	
 	for (unsigned i = 0; i < numOfCores; ++i)
+	{
 		threads[i]->join();
-
+	}
+	
 	SaveSSFile(s, iteration);
 
-	// // Unthreaded Version
-	// std::string fileInfo = std::string("");
-	// RayTrace(spheres, im, fileInfo);
-		
-	// SaveToFile(iteration, fileInfo);
+	for (unsigned i = 0; i < numOfCores; ++i)
+	{
+		delete threads[i];
+		delete s[i];
+	}
 }
 
 void Renderer::RayTraceThreaded(const std::vector<Sphere*> &spheres, Vec3f *imageSegment, const int &threadIndex, std::string *s)
@@ -121,13 +133,12 @@ void Renderer::SaveSSFile(std::string** s, const int &iteration)
 	std::ofstream ofs(filename, std::ios::out | std::ios::binary);
 	
 	ofs.flush();
-	std::string fullData = "\n";
+	std::string fullData = "";
 	ofs << "P6\n" << width << " " << height << "\n255\n";
-	for (unsigned i = 0; i < numOfCores; ++i)
-	{
-		fullData += *s[i];
-	}
 
+	for (unsigned i = 0; i < numOfCores; ++i)
+		fullData += *s[i];
+	
 	ofs << fullData;
 	ofs.close();
 
@@ -250,22 +261,22 @@ void Renderer::SampleFrames()
 	}
 }
 
-void Renderer::SmoothScalingOptimized()
+void Renderer::SmoothScalingOptimized(const bool &isThreaded)
 {
 	auto startRender = std::chrono::system_clock::now();
 
 	FramesCollection animations;
 	int numOfFrames = 101;
 	std::vector<Sphere*> spheres;
+	
 
 	animations.ReadJSON("Data\\spheresData.json", numOfFrames);
 	
 	numOfFrames--;
 
 	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
-	for (unsigned r = 0; r <= numOfFrames; ++r)
+	for (int r = 0; r <= numOfFrames; ++r)
 	{
-		auto start = std::chrono::system_clock::now();
 
 		for (unsigned i = 0; i < animations.numOfObjects; ++i)
 		{
@@ -274,7 +285,12 @@ void Renderer::SmoothScalingOptimized()
 			spheres.emplace_back(new Sphere(frame.pos, frame.scale, frame.brushColour, 1, 0.0));
 		}
 
-		Render(spheres, int(r));
+		auto start = std::chrono::system_clock::now();
+
+		if (isThreaded)
+			RenderThreaded(spheres, r);
+		else 
+			Render(spheres, r);
 
 		auto end = std::chrono::duration_cast <Milliseconds>(std::chrono::system_clock::now() - start);
 
@@ -284,14 +300,17 @@ void Renderer::SmoothScalingOptimized()
 		spheres.clear();
 	}
 
-	auto endRender = std::chrono::duration_cast <Milliseconds>(std::chrono::system_clock::now() - startRender);
+	auto endRenderTime = std::chrono::duration_cast <Milliseconds>(std::chrono::system_clock::now() - startRender);
 
 	numOfFrames++;
 
-	std::cout << "Final Render Time: " << endRender.count() << "ms" << std::endl;
-	std::cout << "Average Time: " << endRender.count() / numOfFrames << std::endl;
-
-	OutputSpeedData(endRender.count(), numOfFrames);
+	std::cout << "Final Render Time: " << endRenderTime.count() << "ms" << std::endl;
+	std::cout << "Average Time: " << endRenderTime.count() / numOfFrames << std::endl;
+	
+	if (isThreaded)
+		OutputSpeedDataThreaded(endRenderTime.count(), numOfFrames);
+	else 
+		OutputSpeedData(endRenderTime.count(), numOfFrames);
 }
 
 void Renderer::OutputSpeedData(const double &endCount, const int &numFrames)
@@ -302,7 +321,24 @@ void Renderer::OutputSpeedData(const double &endCount, const int &numFrames)
 
 	std::ofstream ofs(filename, std::ios::out | std::ios::binary);
 
-	ofs << "Final Render Time: " << endCount << "ms\r\n" <<
+	ofs << "Resolution: " << width << "x" << height << 
+		"\r\nFinal Render Time: " << endCount << "ms\r\n" <<
+		"Average Time (milliseconds): " << endCount / numFrames << "ms\r\n" <<
+		"Average Time (seconds) " << endCount / (numFrames * 1000) << "s";
+
+	ofs.close();
+}
+
+void Renderer::OutputSpeedDataThreaded(const double &endCount, const int &numFrames)
+{
+	// Save result to a PPM image (keep these flags if you compile under Windows)
+	std::string tempString = "./RenderSpeedDataThreaded.txt";
+	char* filename = (char*)tempString.c_str();
+
+	std::ofstream ofs(filename, std::ios::out | std::ios::binary);
+
+	ofs << "Resolution: " << width << "x" << height << 
+		"\r\nFinal Render Time: " << endCount << "ms\r\n" <<
 		"Average Time (milliseconds): " << endCount / numFrames << "ms\r\n" <<
 		"Average Time (seconds) " << endCount / (numFrames * 1000) << "s";
 

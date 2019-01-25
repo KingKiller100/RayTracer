@@ -13,8 +13,7 @@ public:
 	
 	// void BasicRender();
 	void SampleFrames();
-	void SmoothScalingOptimized();
-	void OutputSpeedData(const double& endCount, const int& numFrames);
+	void SmoothScalingOptimized(const bool &isThreaded);
 	void SmoothScalingUO();
 
 private:
@@ -33,9 +32,12 @@ private:
 
 private:
 	void Render(const std::vector<Sphere*> &spheres, const int &iteration);
+	void RenderThreaded(const std::vector<Sphere*>& spheres, const int& iteration);
 	void RayTraceThreaded(const std::vector<Sphere*>& spheres, Vec3f* imageSegment, const int &threadIndex, std::string *s);
 	void RayTrace(const std::vector<Sphere*>& spheres, Vec3f *imageSegment, std::string &fileInfo);
 	void SaveSSFile(std::string** s, const int &iteration);
 	void SaveToFile(const int& iteration, std::string &fileInfo) const;
+	void OutputSpeedData(const double& endCount, const int& numFrames);
+	void OutputSpeedDataThreaded(const double& endCount, const int& numFrames);
 };
 
